@@ -1,15 +1,75 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "教研项目管理系统"
+			}
+		},
+		{
+			"path": "pages/personal/logged",
+			"style": {
+				"navigationBarTitleText": "教研项目管理系统"
+			}
+		},
+		{
+			"path": "pages/personal/unLogged",
+			"style": {
+				"navigationBarTitleText": "教研项目管理系统"
+			}
+		},
+		{
+			"path": "pages/features/judge/judge",
+			"style": {
+				"navigationBarTitleText": "项目评审"
+			}
+		},
+		{
+			"path": "pages/features/judge/judgeDetail",
+			"style": {
+				"navigationBarTitleText": "项目详情"
+			}
+		},
+		{
+			"path": "pages/features/progress/progress",
+			"style": {
+				"navigationBarTitleText": "项目进度"
+			}
+		},
+		{
+			"path": "pages/features/progress/progressDetail",
+			"style": {
+				"navigationBarTitleText": "进度详情"
+			}
+		},
+		{
+			"path": "pages/features/publish/publish",
+			"style": {
+				"navigationBarTitleText": "发布申报"
+			}
+		},
+		{
+			"path": "pages/features/publish/publishForm",
+			"style": {
+				"navigationBarTitleText": "发布申报"
+			}
+		},
+		{
+			"path": "pages/features/shenhe/shenhe",
+			"style": {
+				"navigationBarTitleText": "项目审核"
+			}
+		},
+		{
+			"path": "pages/features/shenhe/shenheDetail",
+			"style": {
+				"navigationBarTitleText": "项目审核"
 			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "教研项目管理系统",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}
