@@ -15,4 +15,12 @@
 <style lang="scss">
 	/*每个页面公共css */
 	@import "uview-ui/index.scss";
+	* {
+    margin: 0;
+    padding: 0;
+	}
+
+	.container {
+		padding: 0 20rpx 0 20rpx;
+	}
 </style>
