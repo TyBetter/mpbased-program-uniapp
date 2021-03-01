@@ -4,6 +4,7 @@
 		<view>
 			<text class="title">{{title}}</text>
 		</view>
+		<u-button type="primary">Hello</u-button>
 	</view>
 </template>
 
