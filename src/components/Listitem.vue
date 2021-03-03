@@ -41,7 +41,7 @@ export default {
                     if (this.itemId !== undefined) {
                         uni.navigateTo({
                             url: `./newsDetail?itemId=${this.itemId}`,
-                            success: e => {
+                            success: () => {
                                 console.log("navigate successfully")
                             },
                             fail: error => console.log(error)
@@ -49,6 +49,7 @@ export default {
                     } else {
                         console.log("error");
                     }
+                    return ;
                 }
             }
 		}
