@@ -28,6 +28,12 @@
 			}
 		},
 		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "欢迎登录"
+			}
+		},
+		{
 			"path": "pages/features/judge/judge",
 			"style": {
 				"navigationBarTitleText": "项目评审"
@@ -93,7 +99,7 @@
 			"selectedIconPath": "./static/nav_home.png",
 			"text": "主页"
 		}, {
-			"pagePath": "pages/personal/unLogged",
+			"pagePath": "pages/personal/logged",
 			"iconPath": "./static/user_account.png",
 			"selectedIconPath": "./static/user_account.png",
 			"text": "我的"
