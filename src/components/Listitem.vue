@@ -1,8 +1,8 @@
 <template>
     <div class="container" @click.native="onItemClick">
-        <h2 class="title">{{itemTitle}}</h2>
+        <h2 class="title">{{itemTitle | titleEllipsis}}</h2>
         <div class="content">
-            <p class="brief">{{itemBrief}}</p>
+            <p class="brief">{{itemBrief | briefEllipsis}}</p>
             <p class="time">{{itemTime}}</p>
         </div>
     </div>
@@ -51,9 +51,28 @@ export default {
                     }
                     return ;
                 }
+                case "projectPublish": {
+                    return ;
+                }
             }
 		}
     },
+    filters: {
+		titleEllipsis (value) { // 控制字符长度
+            if (!value) return ''
+            if (value.length > 8) {
+                return value.slice(0,8) + '...'
+            }
+            return value
+		},
+		briefEllipsis (value) {
+			if (!value) return '暂无简介'
+			if (value.length > 60) {
+				return value.slice(0,60) + '...'
+			}
+			return value
+		}
+	}
 }
 </script>
 
@@ -96,6 +115,7 @@ export default {
                 letter-spacing: 1px;
                 width: 100%;
                 font-weight: 250;
+                word-break: break-all;
             }
 
             .time {

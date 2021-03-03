@@ -7,8 +7,8 @@
 				:key="index"
 			>
 				<Listitem 
-					:itemTitle="item.title | titleEllipsis"
-					:itemBrief="item.brief | briefEllipsis"
+					:itemTitle="item.title"
+					:itemBrief="item.brief"
 					:itemTime="item.time"
 					:itemId="index"
 					type="newsIndex"
@@ -72,22 +72,6 @@
 		},
 		methods: {
 			
-		},
-		filters: {
-			titleEllipsis (value) { // 控制字符长度
-			if (!value) return ''
-			if (value.length > 8) {
-				return value.slice(0,8) + '...'
-			}
-			return value
-			},
-			briefEllipsis (value) {
-				if (!value) return ''
-				if (value.length > 60) {
-					return value.slice(0,60) + '...'
-				}
-				return value
-			}
 		}
 	}
 </script>

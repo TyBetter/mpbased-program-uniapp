@@ -7,25 +7,25 @@
 
         <div class="contentList">
             <ul class="list">
-                <li class="items" id="publish" @click="onListItemClick">
+                <li class="items" id="publish" @click.capture="onListItemClick">
                     <u-icon name="plus" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                     <span class="letter">发布项目</span>
                     <span class="rightArrow">></span>
                 </li>
 
-                <li class="items" id="shenhe" @click="onListItemClick">
+                <li class="items" id="shenhe" @click.capture="onListItemClick">
                     <u-icon name="checkmark" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                     <span class="letter">项目审核</span>
                     <span class="rightArrow">></span>
                 </li>
 
-                <li class="items" id="judge" @click="onListItemClick">
+                <li class="items" id="judge" @click.capture="onListItemClick">
                     <u-icon name="eye" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                     <span class="letter">项目评审</span>
                     <span class="rightArrow">></span>
                 </li>
 
-                <li class="items" id="progress" @click="onListItemClick">
+                <li class="items" id="progress" @click.capture="onListItemClick">
                     <u-icon name="list" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                     <span class="letter">进度查看</span>
                     <span class="rightArrow">></span>
