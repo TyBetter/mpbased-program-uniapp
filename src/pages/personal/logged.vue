@@ -2,7 +2,7 @@
     <div class="container">
 
         <div class="head">
-            你好<span class="douhao">，</span>{{username}}
+            您好<span class="douhao">，</span>{{username}}
         </div>
 
         <div class="contentList">

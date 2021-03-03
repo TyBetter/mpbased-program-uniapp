@@ -93,7 +93,7 @@
 			"selectedIconPath": "./static/nav_home.png",
 			"text": "主页"
 		}, {
-			"pagePath": "pages/personal/logged",
+			"pagePath": "pages/personal/unLogged",
 			"iconPath": "./static/user_account.png",
 			"selectedIconPath": "./static/user_account.png",
 			"text": "我的"
