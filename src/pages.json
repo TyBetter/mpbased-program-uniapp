@@ -10,6 +10,12 @@
 			}
 		},
 		{
+			"path": "pages/index/newsDetail",
+			"style": {
+				"navigationBarTitleText": "消息详情"
+			}
+		},
+		{
 			"path": "pages/personal/logged",
 			"style": {
 				"navigationBarTitleText": "教研项目管理系统"

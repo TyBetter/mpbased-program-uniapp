@@ -10,6 +10,8 @@
 					:itemTitle="item.title | titleEllipsis"
 					:itemBrief="item.brief | briefEllipsis"
 					:itemTime="item.time"
+					:itemId="index"
+					type="newsIndex"
 				/>
 			</li>
 		</ul>
@@ -25,8 +27,6 @@
 		},
 		data() {
 			return {
-				title: "hello",
-				brief: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, quia vero. Voluptatibus illo fugiat accusantium ipsum dolor odio consequatur? Natus quia deserunt totam voluptatem ex unde porro quod dignissimos iusto.",
 				list: [
 					{
 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
@@ -43,7 +43,7 @@
 				],
 				itemList: [
 					{
-						title: "hello",
+						title: "你好你好",
 						brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
 						time: "181818"
 					},
@@ -68,8 +68,10 @@
 		onLoad() {
 			
 		},
+		mounted() {
+		},
 		methods: {
-
+			
 		},
 		filters: {
 			titleEllipsis (value) { // 控制字符长度

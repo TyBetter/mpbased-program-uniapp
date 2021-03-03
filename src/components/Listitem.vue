@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @click="onItemClick">
+    <div class="container" @click.native="onItemClick">
         <h2 class="title">{{itemTitle}}</h2>
         <div class="content">
             <p class="brief">{{itemBrief}}</p>
@@ -24,22 +24,34 @@ export default {
             type: String ,
             value: "2/12 12:12:12"
         },
-        itemUrl: {
+        itemId: {
+            type: Number,
+            value: null
+        },
+        type: {
             type: String,
-            value: "@/index/index"
+            value: "default"
         }
 
     },
     methods: {
-        onItemClick: e => {
-            uni.navigateTo({
-                url: itemUrl,
-                success: e => {
-                    console.log("navigate successfully")
-                },
-                fail: error => console.log(error)
-            })
-        }
+        onItemClick() {
+            switch (this.type) {
+                case "newsIndex" : {
+                    if (this.itemId !== undefined) {
+                        uni.navigateTo({
+                            url: `./newsDetail?itemId=${this.itemId}`,
+                            success: e => {
+                                console.log("navigate successfully")
+                            },
+                            fail: error => console.log(error)
+                        })
+                    } else {
+                        console.log("error");
+                    }
+                }
+            }
+		}
     },
 }
 </script>
