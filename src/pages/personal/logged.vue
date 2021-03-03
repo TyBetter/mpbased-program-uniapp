@@ -1,26 +1,34 @@
 <template>
     <div class="container">
-        
+
         <div class="head">
-            你好，{{userName}}
+            你好<span class="douhao">，</span>{{username}}
         </div>
 
         <div class="contentList">
             <ul class="list">
                 <li class="items" id="publish" @click="onListItemClick">
-                    发布项目
+                    <u-icon name="plus" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
+                    <span class="letter">发布项目</span>
+                    <span class="rightArrow">></span>
                 </li>
 
                 <li class="items" id="shenhe" @click="onListItemClick">
-                    项目审核
+                    <u-icon name="checkmark" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
+                    <span class="letter">项目审核</span>
+                    <span class="rightArrow">></span>
                 </li>
 
                 <li class="items" id="judge" @click="onListItemClick">
-                    项目评审
+                    <u-icon name="eye" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
+                    <span class="letter">项目评审</span>
+                    <span class="rightArrow">></span>
                 </li>
 
                 <li class="items" id="progress" @click="onListItemClick">
-                    项目进度查看
+                    <u-icon name="list" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
+                    <span class="letter">进度查看</span>
+                    <span class="rightArrow">></span>
                 </li>
             </ul>
         </div>
@@ -31,10 +39,7 @@
 export default {
     data() {
         return {
-            userName: {
-                type: String,
-                value: null
-            }
+            username: "李华Lihua"
         }
     },
     methods: {
@@ -89,7 +94,7 @@ export default {
                     return ;
                 }
                 default: {
-
+                    console.warn(e.target.id);
                 }
             }
         }
@@ -101,5 +106,62 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    .container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        flex-wrap: wrap;
 
+        .head {
+            width: 100%;
+            height: 300rpx;
+            font-size: 60rpx;
+            letter-spacing: 0.5px;
+            padding-left: 50rpx;
+            padding-top: 200rpx;
+            .douhao {
+                color: rgba(94, 150, 255, 0.842);
+            }
+        }
+
+        .contentList {
+            width: 100%;
+            margin-top: 100rpx;
+            .list {
+                width: 100%;
+                height: 100%;
+                padding-left: 50rpx;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                .items {
+                    display: flex;
+                    align-items: center;
+                    height: 100rpx;
+                    width: 100%;
+                    line-height: 100rpx;
+                    letter-spacing: 1px;
+                    font-size: 35rpx;
+                    border-bottom: 0.5px solid rgba(129, 129, 129, 0.822);
+
+                    .letter {
+                        margin-left: 10rpx;
+                        margin-right: 60%;
+                    }
+
+                    .rightArrow {
+                        font-weight: 100;
+                        font-size: 38rpx;
+                        color: rgba(153, 153, 153, 0.507);
+                    }
+                }
+
+                .items:last-child {
+                    border: none;
+                }
+            }
+        }
+
+    }
 </style>
