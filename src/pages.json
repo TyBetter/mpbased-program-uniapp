@@ -16,21 +16,9 @@
 			}
 		},
 		{
-			"path": "pages/personal/logged",
+			"path": "pages/account/account",
 			"style": {
 				"navigationBarTitleText": "教研项目管理系统"
-			}
-		},
-		{
-			"path": "pages/personal/unLogged",
-			"style": {
-				"navigationBarTitleText": "教研项目管理系统"
-			}
-		},
-		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "欢迎登录"
 			}
 		},
 		{
@@ -99,7 +87,7 @@
 			"selectedIconPath": "./static/nav_home.png",
 			"text": "主页"
 		}, {
-			"pagePath": "pages/personal/logged",
+			"pagePath": "pages/account/account",
 			"iconPath": "./static/user_account.png",
 			"selectedIconPath": "./static/user_account.png",
 			"text": "我的"

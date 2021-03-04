@@ -21,7 +21,6 @@
             </u-button>
         </div>
 
-        
     </div>
 	
 </template>
@@ -40,15 +39,36 @@ export default {
 	},
 	methods: {
 		submit() {
+            uni.showLoading({
+                title: "请稍候"
+            });
 			if (!this.account || !this.password) {
+                uni.hideLoading();
                 uni.showToast({
                     title: "请完整输入账号和密码",
                     mask: true,
-                    duration: 1000
+                    duration: 1500
                 });
                 return ;
             }
             // axios发送post请求给后端
+            let user = {
+                account: this.account,
+                userType: "teacher"
+            }
+            uni.setStorage({
+                key: "user",
+                data: user,
+                success: () => {
+                    uni.hideLoading();
+                    uni.navigateTo({
+                        url: "./../account/account",
+                        success: () => console.log("login successfully"),
+                        fail: err => console.warn(err)
+                    });
+                },
+                fail: err => console.warn(`login failed, ${err}`)
+            })   
 		}
 	},
 	onReady() {

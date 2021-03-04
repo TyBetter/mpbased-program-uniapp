@@ -37,7 +37,7 @@
 			</u-form-item> -->
 
 		</u-form>
-		<u-button @click="submit">提交</u-button>
+		<u-button @click="submit">发布</u-button>
 	</div>
 </template>
 
