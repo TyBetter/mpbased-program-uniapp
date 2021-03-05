@@ -4,6 +4,12 @@
         <div class="content">
             <p class="brief">{{itemBrief | briefEllipsis}}</p>
             <p class="time">{{itemTime}}</p>
+            
+            <!-- 仅在评审页面显示 -->
+            <p class="status" v-if="type === 'judge'">
+                {{status === "complete" ? "已评审" : "未评审"}}
+            </p>
+
         </div>
     </div>
 </template>
@@ -31,6 +37,10 @@ export default {
         type: {
             type: String,
             value: "default"
+        },
+        status: {
+            type: String,
+            value: "notyet"
         }
 
     },
@@ -52,6 +62,20 @@ export default {
                     return ;
                 }
                 case "projectPublish": {
+                    return ;
+                }
+                case "judge" : {
+                    if (this.itemId !== undefined) {
+                        uni.navigateTo({
+                            url: `./judgeDetail?itemId=${this.itemId}`,
+                            success: () => {
+                                console.log("navigate successfully")
+                            },
+                            fail: error => console.log(error)
+                        })
+                    } else {
+                        console.log("error");
+                    }
                     return ;
                 }
             }
@@ -105,7 +129,7 @@ export default {
             width: 100%;
             height: 160rpx;
             margin-top: 20rpx;
-            align-items: center;
+            // align-items: center;
             flex-wrap: wrap;
             flex-direction: column;
             justify-content: space-between;
@@ -119,9 +143,18 @@ export default {
             }
 
             .time {
+                display: inline-block;
                 font-size: 25rpx;
                 letter-spacing: 1.5rpx;
-                width: 100%;
+                width: 60%;
+                font-weight: 150;
+            }
+
+            .status {
+                display: inline-block;
+                font-size: 25rpx;
+                letter-spacing: 1.5rpx;
+                width: 40%;
                 font-weight: 150;
             }
         }

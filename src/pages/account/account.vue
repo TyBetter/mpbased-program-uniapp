@@ -9,25 +9,45 @@
 
             <div class="contentList">
                 <ul class="list">
-                    <li class="items" id="publish" @click.capture="onListItemClick" v-if="userType === 'manager'">
+                    <li 
+                        class="items" 
+                        id="publish" 
+                        @click.capture="onListItemClick" 
+                        v-if="userType === 'manager' || userType === 'all'"
+                    >
                         <u-icon name="plus" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">发布项目</span>
                         <span class="rightArrow">></span>
                     </li>
 
-                    <li class="items" id="shenhe" @click.capture="onListItemClick" v-if="userType === 'manager'">
+                    <li 
+                        class="items" 
+                        id="shenhe" 
+                        @click.capture="onListItemClick" 
+                        v-if="userType === 'manager' || userType === 'all'"
+                    >
                         <u-icon name="checkmark" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">项目审核</span>
                         <span class="rightArrow">></span>
                     </li>
 
-                    <li class="items" id="judge" @click.capture="onListItemClick" v-if="userType === 'teacher'">
+                    <li 
+                        class="items" 
+                        id="judge" 
+                        @click.capture="onListItemClick" 
+                        v-if="userType === 'teacher' || userType === 'all'"
+                    >
                         <u-icon name="eye" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">项目评审</span>
                         <span class="rightArrow">></span>
                     </li>
 
-                    <li class="items" id="progress" @click.capture="onListItemClick" v-if="userType === 'teacher'">
+                    <li 
+                        class="items" 
+                        id="progress" 
+                        @click.capture="onListItemClick" 
+                        v-if="userType === 'teacher' || userType === 'all'"
+                    >
                         <u-icon name="list" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">进度查看</span>
                         <span class="rightArrow">></span>
@@ -90,7 +110,7 @@
 export default {
     data() {
         return {
-            username: null,
+            username: null, // 已登陆页面显示用户名
             customStyle: {
                 color: 'rgba(94, 150, 255, 0.842)'
             },
@@ -106,9 +126,9 @@ export default {
                 marginLeft: "5%",
                 overflow: "hidden"
             },
-            islogged: false,
-            userType: "teacher",
-            login: false,
+            islogged: false, // 是否已登录
+            userType: "all", // 用户身份
+            login: false, // 是否显示登录表单弹窗
             account: null, // 登录表单输入账号
             password: null, // 登录表单输入密码
         }
@@ -188,7 +208,7 @@ export default {
             // axios发送post请求给后端
             let user = {
                 account: this.account,
-                userType: "teacher"
+                userType: "all"
             }
             uni.setStorage({
                 key: "user",
