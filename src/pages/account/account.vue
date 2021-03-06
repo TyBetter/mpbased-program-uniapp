@@ -3,7 +3,7 @@
 
         <!-- 已登录页面 -->
         <div class="logged" v-if="islogged">
-             <div class="head">
+            <div class="head">
                 您好<span class="douhao">，</span>{{username}}
             </div>
 

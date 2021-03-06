@@ -47,7 +47,7 @@ export default {
     methods: {
         onItemClick() {
             switch (this.type) {
-                case "newsIndex" : {
+                case "newsIndex" : { // 首页新闻点击事件
                     if (this.itemId !== undefined) {
                         uni.navigateTo({
                             url: `./newsDetail?itemId=${this.itemId}`,
@@ -61,10 +61,10 @@ export default {
                     }
                     return ;
                 }
-                case "projectPublish": {
+                case "projectPublish": { // 项目发布页面点击事件
                     return ;
                 }
-                case "judge" : {
+                case "judge" : { // 项目评审页面点击事件
                     if (this.itemId !== undefined) {
                         uni.navigateTo({
                             url: `./judgeDetail?itemId=${this.itemId}`,
@@ -76,6 +76,20 @@ export default {
                     } else {
                         console.log("error");
                     }
+                    return ;
+                }
+                case "progress" : { // 进度查看页面点击事件
+                    // if (this.itemId !== undefined) {
+                    //     uni.navigateTo({
+                    //         url: `./progressDetail?itemId=${this.itemId}`,
+                    //         success: () => {
+                    //             console.log("navigate successfully")
+                    //         },
+                    //         fail: error => console.log(error)
+                    //     })
+                    // } else {
+                    //     console.log("error");
+                    // }
                     return ;
                 }
             }

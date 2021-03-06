@@ -1,8 +1,15 @@
 <template>
     <div class="container">
+
+        <listTitle
+            titleText="待评审"
+        ></listTitle>
+
+
+        <!-- 无项目时显示 -->
         <blank
             text="待评审项目"
-            v-if="isBlank"
+            v-if="list.length === 0"
         ></blank>
 
         <div 
@@ -32,9 +39,10 @@
 <script>
 import blank from '../../../components/blank.vue';
 import Listitem from './../../../components/Listitem.vue';
+import listTitle from './../../../components/listTitle.vue';
 
 export default {
-    components: { blank, Listitem },
+    components: { blank, Listitem, listTitle },
     data() {
         return {
             isBlank: false, // 空页面显示

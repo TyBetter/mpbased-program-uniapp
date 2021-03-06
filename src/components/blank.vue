@@ -29,12 +29,12 @@ export default {
         padding: 15rpx 0 15rpx 0;
         justify-content: center;
         align-items: center;
-        margin-top: 30rpx;
+        margin-top: 60rpx;
         border-top: 0.5px solid rgba(129, 129, 129, 0.822);
 
         p {
             font-size: 25rpx;
-            color: #ddd;
+            color: rgb(155, 155, 155);
             font-weight: 200;
             letter-spacing: 1px;
         }

@@ -12,7 +12,18 @@
                 发布新项目
             </u-button>
         </div>
-        <div class="pro-list">
+
+
+        <!-- 无项目时显示 -->
+        <blank
+            text="已发布的项目"
+            v-if="projectList.length === 0"
+        ></blank>
+
+        <div 
+            class="pro-list"
+            v-else
+        >
             <ul class="list">
                 <li class="items" v-for="item in projectList" :key="item.id">
                     <Listitem
