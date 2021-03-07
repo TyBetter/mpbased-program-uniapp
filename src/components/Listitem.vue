@@ -92,6 +92,20 @@ export default {
                     // }
                     return ;
                 }
+                case "shenhe" : { // 项目审核页面点击事件
+                    if (this.itemId !== undefined) {
+                        uni.navigateTo({
+                            url: `./shenheDetail?itemId=${this.itemId}`,
+                            success: () => {
+                                console.log("navigate successfully")
+                            },
+                            fail: error => console.log(error)
+                        })
+                    } else {
+                        console.log("error");
+                    }
+                    return ;
+                }
             }
 		}
     },
