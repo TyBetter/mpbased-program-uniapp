@@ -37,7 +37,7 @@ export default {
                     title: '加载失败，请稍后再试',
                     mask: true,
                     duration: 1500,
-                    icon: none
+                    icon: 'none'
                 });
                 reject();
             }
@@ -59,7 +59,7 @@ export default {
                         title: '未知错误，请稍后再试',
                         mask: true,
                         duration: 1500,
-                        icon: none
+                        icon: 'none'
                     });
                 }
 			}).catch(err => {
@@ -68,7 +68,7 @@ export default {
                     title: '未知错误，请稍后再试',
                     mask: true,
                     duration: 1500,
-                    icon: none
+                    icon: 'none'
                 });
             })
         }).catch(err => {
@@ -77,7 +77,7 @@ export default {
                 title: '未知错误，请稍后再试',
                 mask: true,
                 duration: 1500,
-                icon: none
+                icon: 'none'
             });
         })
         

@@ -83,12 +83,12 @@
             <div class="form">
                 <div class="formBlock">
                     <span class="title">账号</span>
-                    <input type="text" v-model.lazy="account" placeholder="请输入账号">
+                    <input type="text" v-model.lazy="userId" placeholder="请输入账号">
                 </div>
 
                 <div class="formBlock">
                     <span class="title">密码</span>
-                    <input type="password" v-model.lazy="password" placeholder="请输入密码">
+                    <input type="password" v-model.lazy="pwd" placeholder="请输入密码">
                 </div>
 
                 <u-button 
@@ -129,8 +129,8 @@ export default {
             islogged: false, // 是否已登录
             userType: "all", // 用户身份
             login: false, // 是否显示登录表单弹窗
-            account: null, // 登录表单输入账号
-            password: null, // 登录表单输入密码
+            userId: null, // 登录表单输入账号
+            pwd: null, // 登录表单输入密码
         }
     },
     methods: {
@@ -192,36 +192,89 @@ export default {
         onLoginBtnClick() {
             this.login = true;
         },
-        submit() { // 登录表单提交
+        submit() {
             uni.showLoading({
                 title: "请稍候"
             });
-			if (!this.account || !this.password) {
+			if (!this.userId || !this.pwd) {
                 uni.hideLoading();
                 uni.showToast({
                     title: "请完整输入账号和密码",
                     mask: true,
-                    duration: 1500
+                    duration: 1500,
+                    icon: 'none'
                 });
                 return ;
             }
-            // axios发送post请求给后端
-            let user = {
-                account: this.account,
-                userType: "all"
-            }
-            uni.setStorage({
-                key: "user",
-                data: user,
-                success: () => {
-                    this.username = this.account;
-                    uni.hideLoading();
-                    this.login = false;
-                    this.islogged = true;
-                },
-                fail: err => console.warn(`login failed, ${err}`)
-            })   
-		}
+            this.$axios({
+                method: 'GET',
+                url: '/login',
+                params: {
+                    userId: this.userId,
+                    pwd: this.pwd
+                }
+            }).then(res => {
+                if (res.msg === 'success') { // 身份验证成功
+                    let user = {
+                        userId: res.data.userId,
+                        account: res.data.username,
+                        userType: res.data.identity
+                    }
+                    uni.setStorage({ // 用户信息存入本地
+                        key: "user",
+                        data: user,
+                        success: () => {
+                            uni.hideLoading();
+                            this.username = user.account;
+                            this.login = false;
+                            this.islogged = true;
+                        },
+                        fail: err => console.warn(`login failed, ${err}`)
+                    })
+                } else {
+                    uni.showToast({
+                        title: res.msg,
+                        duration: 2000,
+                        mask: true,
+                        icon: 'none'
+                    })
+                }
+            }).catch(err=> {
+                console.warn('login err', err);
+            })
+               
+		},
+        // submit() { // 登录表单提交
+        
+        //     uni.showLoading({
+        //         title: "请稍候"
+        //     });
+		// 	if (!this.account || !this.password) {
+        //         uni.hideLoading();
+        //         uni.showToast({
+        //             title: "请完整输入账号和密码",
+        //             mask: true,
+        //             duration: 1500
+        //         });
+        //         return ;
+        //     }
+        //     // axios发送post请求给后端
+        //     let user = {
+        //         account: this.account,
+        //         userType: "all"
+        //     }
+        //     uni.setStorage({
+        //         key: "user",
+        //         data: user,
+        //         success: () => {
+        //             this.username = this.account;
+        //             uni.hideLoading();
+        //             this.login = false;
+        //             this.islogged = true;
+        //         },
+        //         fail: err => console.warn(`login failed, ${err}`)
+        //     })   
+		// }
     },
     onLoad() {
         uni.showLoading({
