@@ -51,7 +51,6 @@ export default {
                 });
                 return ;
             }
-            // axios发送请求给后端
             this.$axios({
                 method: 'GET',
                 url: '/login',
