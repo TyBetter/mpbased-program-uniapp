@@ -10,7 +10,7 @@
 					:itemTitle="item.title"
 					:itemBrief="item.brief"
 					:itemTime="item.time"
-					:itemId="item.id"
+					:itemId="item.newsId"
 					type="newsIndex"
 				/>
 			</li>
@@ -43,32 +43,6 @@
 					}
 				],
 				itemList:[]
-				// itemList: [
-				// 	{
-				// 		title: "你好你好",
-				// 		brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-				// 		time: "181818",
-				// 		id: 1
-				// 	},
-				// 	{
-				// 		title: "hello",
-				// 		brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-				// 		time: "181818",
-				// 		id: 2
-				// 	},
-				// 	{
-				// 		title: "hello",
-				// 		brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-				// 		time: "181818",
-				// 		id: 3
-				// 	},
-				// 	{
-				// 		title: "hello",
-				// 		brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-				// 		time: "181818",
-				// 		id: 4
-				// 	}
-				// ]
 			}
 		},
 		onLoad() {
@@ -78,12 +52,11 @@
 			const _this = this;
 			this.$axios({
 				method: 'GET',
-				url: '/indexitems',
+				url: '/newsIndex',
 				params: {}
 			}).then(res => {
-				console.log('res',res);
 				_this.itemList = res;
-			}).catch(err => console.warn(err))
+			}).catch(err => console.warn('err', err))
 		},
 		methods: {
 			

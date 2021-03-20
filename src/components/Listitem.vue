@@ -112,14 +112,14 @@ export default {
     filters: {
 		titleEllipsis (value) { // 控制字符长度
             if (!value) return ''
-            if (value.length > 8) {
+            if (value.length > 15) {
                 return value.slice(0,8) + '...'
             }
             return value
 		},
 		briefEllipsis (value) {
 			if (!value) return '暂无简介'
-			if (value.length > 60) {
+			if (value.length > 65) {
 				return value.slice(0,60) + '...'
 			}
 			return value
@@ -145,9 +145,10 @@ export default {
         justify-content: flex-start;
 
         .title {
-            font-size: 60rpx;
+            font-size: 40rpx;
             width: 100%;
             height: 80rpx;
+            line-height: 80rpx;
             padding-bottom: 3rpx;
             border-bottom: 0.5px solid rgba(129, 129, 129, 0.822);
         }
