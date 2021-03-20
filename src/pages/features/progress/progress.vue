@@ -6,7 +6,7 @@
         <!-- 无项目时显示 -->
         <blank
             text="可查看的项目"
-            v-if="list.length === 0"
+            v-if="isBlank"
         ></blank>
 
         <div 
@@ -17,14 +17,14 @@
                 <li 
                     class="items"
                     v-for="item in list"
-                    :key="item.id"
+                    :key="item.projectId"
                     @click.capture="onProjectItemClick"
                 >
                     <listitem
                         :itemTitle="item.title"
                         :itemBrief="item.brief"
                         :itemTime="item.time"
-                        :itemId="item.id"
+                        :itemId="item.projectId"
                         type="progress"
                     ></listitem>
                 </li>
@@ -49,7 +49,7 @@
                         <template v-slot:content>
                             <view>
                                 <view class="u-order-title">{{item.status}}</view>
-                                <view class="u-order-desc">{{item.brief}}</view>
+                                <!-- <view class="u-order-desc">{{item.brief}}</view> -->
                                 <view class="u-order-time">{{item.time}}</view>
                             </view>
                         </template>
@@ -72,32 +72,7 @@ export default {
         return {
             isBlank: false, // 空页面显示
             popupShow: false, // 控制进度popup显示
-            list: [
-                {
-					title: "你好你好",
-					brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-					time: "181818",
-					id: 1
-				},
-				{
-					title: "hello",
-					brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-					time: "181818",
-					id: 2
-				},
-				{
-					title: "hello",
-					brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-					time: "181818",
-					id: 3
-				},
-				{
-					title: "hello",
-					brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-					time: "181818",
-					id: 4
-				}
-            ],
+            list: [],
             popupCustomStyle: {
                 paddingTop: "30rpx"
             },
@@ -130,9 +105,53 @@ export default {
             ]
         }
     },
-    // onload() {
-    //     this.isBlank = this.list.length === 0 ? true : false;
-    // },
+    onLoad() {
+        uni.showLoading({
+            title: "请稍候"
+        });
+        const _this = this;
+        uni.getStorage({
+            key: "user",
+            success: (res) => {
+                _this.$axios({
+                    method: "GET",
+                    url: "/project",
+                    params: {
+                        userId: res.data.userId
+                    }
+                }).then(res => { // 通过userId向后端请求项目列表
+                    if (res.msg === 'success') { // 请求成功
+                        _this.list = res.data;
+                        _this.isBlank = res.data.length === 0 ? true : false;
+                        uni.hideLoading();
+                    } else {
+                        uni.showToast({
+                            title: res.msg,
+                            duration: 1500,
+                            mask: true,
+                            icon: 'none'
+                        });
+                    }
+                }).catch(err => {
+                    console.warn('err catched', err);
+                    uni.showToast({
+                        title: "未知错误",
+                        duration: 1500,
+                        mask: true,
+                        icon: 'none'
+                    });
+                })
+            },
+            fail: () => {
+                console.warn('读取本地用户信息出错');
+                uni.hideLoading();
+            },
+            complete: () => {
+                uni.hideLoading();
+            }
+        })
+        
+    },
     methods: {
         onProjectItemClick() {
             // 此处向后端发送请求，根据ID获取点击项目的进度状态，修改this.progressList

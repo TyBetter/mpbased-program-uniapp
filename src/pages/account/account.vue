@@ -93,7 +93,7 @@
 
                 <u-button 
                     type="primary" 
-                    @click="login" 
+                    @click="submit" 
                     plain 
                     :custom-style="loginBtnCustomStyle"
                 >
@@ -192,7 +192,7 @@ export default {
         onLoginBtnClick() {
             this.login = true;
         },
-        login() { // 登录按钮
+        submit() { // 登录表单按钮
             uni.showLoading({
                 title: "请稍候"
             });
@@ -237,6 +237,7 @@ export default {
                         console.error('用户信息错误');
                     }
                 } else {
+                    this.pwd = null; // 清空密码输入
                     uni.showToast({
                         title: res.msg,
                         duration: 2000,
