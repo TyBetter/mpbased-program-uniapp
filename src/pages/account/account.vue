@@ -13,7 +13,7 @@
                         class="items" 
                         id="publish" 
                         @click.capture="onListItemClick" 
-                        v-if="userType === 'manager' || userType === 'all'"
+                        v-if="userType === 'manager' || userType === 'test'"
                     >
                         <u-icon name="plus" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">发布项目</span>
@@ -24,7 +24,7 @@
                         class="items" 
                         id="shenhe" 
                         @click.capture="onListItemClick" 
-                        v-if="userType === 'manager' || userType === 'all'"
+                        v-if="userType === 'manager' || userType === 'test'"
                     >
                         <u-icon name="checkmark" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">项目审核</span>
@@ -35,7 +35,7 @@
                         class="items" 
                         id="judge" 
                         @click.capture="onListItemClick" 
-                        v-if="userType === 'teacher' || userType === 'all'"
+                        v-if="userType === 'teacher' || userType === 'test'"
                     >
                         <u-icon name="eye" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">项目评审</span>
@@ -46,7 +46,7 @@
                         class="items" 
                         id="progress" 
                         @click.capture="onListItemClick" 
-                        v-if="userType === 'teacher' || userType === 'all'"
+                        v-if="userType === 'teacher' || userType === 'test'"
                     >
                         <u-icon name="list" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">进度查看</span>
@@ -93,7 +93,7 @@
 
                 <u-button 
                     type="primary" 
-                    @click="submit" 
+                    @click="login" 
                     plain 
                     :custom-style="loginBtnCustomStyle"
                 >
@@ -127,7 +127,7 @@ export default {
                 overflow: "hidden"
             },
             islogged: false, // 是否已登录
-            userType: "all", // 用户身份
+            userType: "test", // 用户身份
             login: false, // 是否显示登录表单弹窗
             userId: null, // 登录表单输入账号
             pwd: null, // 登录表单输入密码
@@ -192,11 +192,11 @@ export default {
         onLoginBtnClick() {
             this.login = true;
         },
-        submit() {
+        login() { // 登录按钮
             uni.showLoading({
                 title: "请稍候"
             });
-			if (!this.userId || !this.pwd) {
+			if (!this.userId || !this.pwd) { // 账号或密码未填写
                 uni.hideLoading();
                 uni.showToast({
                     title: "请完整输入账号和密码",
@@ -206,7 +206,7 @@ export default {
                 });
                 return ;
             }
-            this.$axios({
+            this.$axios({ // 向后端验证
                 method: 'GET',
                 url: '/login',
                 params: {
@@ -215,66 +215,39 @@ export default {
                 }
             }).then(res => {
                 if (res.msg === 'success') { // 身份验证成功
-                    let user = {
-                        userId: res.data.userId,
-                        account: res.data.username,
-                        userType: res.data.identity
+                    if (res.data.userId && res.data.username && res.data.identity) {
+                        let user = {
+                            userId: res.data.userId,
+                            account: res.data.username,
+                            userType: res.data.identity
+                        }
+                        this.userType = res.data.identity;
+                        uni.setStorage({ // 用户信息存入本地
+                            key: "user",
+                            data: user,
+                            success: () => {
+                                uni.hideLoading();
+                                this.username = user.account;
+                                this.login = false;
+                                this.islogged = true;
+                            },
+                            fail: err => console.warn(`login failed, ${err}`)
+                        })
+                    } else {
+                        console.error('用户信息错误');
                     }
-                    uni.setStorage({ // 用户信息存入本地
-                        key: "user",
-                        data: user,
-                        success: () => {
-                            uni.hideLoading();
-                            this.username = user.account;
-                            this.login = false;
-                            this.islogged = true;
-                        },
-                        fail: err => console.warn(`login failed, ${err}`)
-                    })
                 } else {
                     uni.showToast({
                         title: res.msg,
                         duration: 2000,
                         mask: true,
                         icon: 'none'
-                    })
+                    });
                 }
-            }).catch(err=> {
+            }).catch(err => {
                 console.warn('login err', err);
             })
-               
-		},
-        // submit() { // 登录表单提交
-        
-        //     uni.showLoading({
-        //         title: "请稍候"
-        //     });
-		// 	if (!this.account || !this.password) {
-        //         uni.hideLoading();
-        //         uni.showToast({
-        //             title: "请完整输入账号和密码",
-        //             mask: true,
-        //             duration: 1500
-        //         });
-        //         return ;
-        //     }
-        //     // axios发送post请求给后端
-        //     let user = {
-        //         account: this.account,
-        //         userType: "all"
-        //     }
-        //     uni.setStorage({
-        //         key: "user",
-        //         data: user,
-        //         success: () => {
-        //             this.username = this.account;
-        //             uni.hideLoading();
-        //             this.login = false;
-        //             this.islogged = true;
-        //         },
-        //         fail: err => console.warn(`login failed, ${err}`)
-        //     })   
-		// }
+		}
     },
     onLoad() {
         uni.showLoading({
