@@ -80,9 +80,7 @@ export default {
         }
     },
     onLoad() {
-        uni.showLoading({
-            title: "请稍候"
-        });
+        uni.showLoading();
         const _this = this;
         uni.getStorage({
             key: "user",
