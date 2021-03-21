@@ -5,7 +5,12 @@
             <p class="brief">{{itemBrief | briefEllipsis}}</p>
 
             <p class="footer">
-                <span class="time">{{itemTime}}</span>
+                <span class="time">
+                    <span v-if="type === 'judge'" style="color:rgba(94, 150, 255, 0.842)">
+                        评审截止时间：
+                    </span>
+                    {{itemTime}}
+                </span>
 
                 <!-- 仅在评审页面显示 -->
                 <span class="status" v-if="type === 'judge'">
@@ -72,7 +77,7 @@ export default {
                 case "judge" : { // 项目评审页面点击事件
                     if (this.itemId !== undefined) {
                         uni.navigateTo({
-                            url: `./judgeDetail?itemId=${this.itemId}`,
+                            url: `./judgeDetail?itemId=${this.itemId}&time=${this.itemTime}`,
                             success: () => {
                                 console.log("navigate successfully")
                             },
