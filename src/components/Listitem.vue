@@ -89,14 +89,13 @@ export default {
                     return ;
                 }
                 case "progress" : { // 进度查看页面点击事件
-                    console.log(11111, this.itemId);
                     this.$emit('child-id', this.itemId);
                     return ;
                 }
                 case "shenhe" : { // 项目审核页面点击事件
                     if (this.itemId !== undefined) {
                         uni.navigateTo({
-                            url: `./shenheDetail?itemId=${this.itemId}`,
+                            url: `./shenheDetail?itemId=${this.itemId}&time=${this.itemTime}`,
                             success: () => {
                                 console.log("navigate successfully")
                             },

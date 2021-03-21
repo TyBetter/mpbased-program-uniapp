@@ -1,24 +1,26 @@
 <template>
     <div class="container">
-        <blank 
-            text="待审核项目"
-            v-if="list.length === 0"    
-        />
         <list-title titleText="待审核项目"/>
         <ul class="list">
             <li 
                 class="list-item"
-                v-for="(item) in list" :key="item.id"
+                v-for="(item) in list" 
+                :key="item.projectId"
             >
                 <listitem 
                     :itemTitle="item.title"
                     :itemBrief="item.brief"
-                    :itemid="item.id"
+                    :itemId="item.projectId"
                     :itemTime="item.time"
                     type="shenhe"
                 />
             </li>
         </ul>
+
+        <blank 
+            text="待审核项目"
+            v-if="list.length === 0"    
+        />
     </div>
 </template>
 
@@ -31,34 +33,59 @@ export default {
     components: { blank, ListTitle, Listitem },
     data() {
         return {
-            list: [
-				{
-					title: "你好你好",
-					brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-					time: "181818",
-					id: 1
-				},
-				{
-					title: "hello",
-					brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-					time: "181818",
-					id: 2
-				},
-				{
-					title: "hello",
-					brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-					time: "181818",
-					id: 3
-				},
-				{
-					title: "hello",
-					brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-					time: "181818",
-					id: 4
-				}
-			]
+            list: []
         }
     },
+    mounted() {
+		const _this = this;
+        uni.showLoading();
+        uni.getStorage({
+            key: 'user',
+            success: res => {
+                this.$axios({
+                    method: 'GET',
+                    url: '/reviewProjects',
+                    params: {
+                        userId: res.data.userId,
+                        identity: res.data.userType
+                    }
+                }).then(res => {
+                    if (res.msg === 'success') {
+                        _this.list = res.data;
+                        uni.hideLoading();
+                    }
+                }).catch(err => {
+                    console.warn('获取后台数据出错', err)
+                    let st = setTimeout(() => {
+                        uni.navigateBack();
+                        clearTimeout(st);
+                    }, 1800)
+                    uni.showToast({
+                        title: '未知错误',
+                        duration: 1500,
+                        mask: true,
+                        icon: 'none'
+                    });
+                });
+            },
+            fail: err => {
+                console.warn('获取本地数据出错', err);
+
+                let st = setTimeout(() => {
+                    uni.navigateBack();
+                    clearTimeout(st);
+                }, 1800);
+
+                uni.showToast({
+                    title: '未知错误',
+                    duration: 1500,
+                    mask: true,
+                    icon: 'none'
+                });
+            }
+        })
+		
+	},
     
 }
 </script>
