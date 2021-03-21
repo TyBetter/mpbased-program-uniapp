@@ -18,13 +18,13 @@
                     class="items"
                     v-for="item in list"
                     :key="item.projectId"
-                    @click.capture="onProjectItemClick"
                 >
                     <listitem
                         :itemTitle="item.title"
                         :itemBrief="item.brief"
                         :itemTime="item.time"
                         :itemId="item.projectId"
+                        @child-id='onProjectItemClick'
                         type="progress"
                     ></listitem>
                 </li>
@@ -76,33 +76,7 @@ export default {
             popupCustomStyle: {
                 paddingTop: "30rpx"
             },
-            progressList: [
-                {
-                    status: "已提交",
-                    brief: "nihaonihaonihaonihao",
-                    time: "2020 2/12 2:2:2"
-                },
-                {
-                    status: "二级学院审核",
-                    brief: "nihaonihaonihaonihao",
-                    time: "2020 2/12 2:2:2"
-                },
-                {
-                    status: "校教务处审核",
-                    brief: "nihaonihaonihaonihao",
-                    time: "2020 2/12 2:2:2"
-                },
-                {
-                    status: "专家评审",
-                    brief: "nihaonihaonihaonihao",
-                    time: "2020 2/12 2:2:2"
-                },
-                {
-                    status: "立项",
-                    brief: "nihaonihaonihaonihao",
-                    time: "2020 2/12 2:2:2"
-                }
-            ]
+            progressList: []
         }
     },
     onLoad() {
@@ -153,12 +127,125 @@ export default {
         
     },
     methods: {
-        onProjectItemClick() {
+        onProjectItemClick(projectId) { // 子组件传递项目Id
             // 此处向后端发送请求，根据ID获取点击项目的进度状态，修改this.progressList
             // 使用promise异步处理
-            this.popupShow = true;
-        }
-    },
+            if (projectId) {
+                uni.showLoading();
+                this.$axios({
+                    method: 'GET',
+                    url: '/progress',
+                    params: {
+                        projectId
+                    }
+                }).then(res => {
+                    if (res.msg === 'success' && res.data.length !== 0) {
+                        this.progressList = this.stuatusArrProduce(res.data);
+                        uni.hideLoading();
+                        this.popupShow = true;
+                    } else {
+                        uni.hideLoading();
+                        uni.showToast({
+                            title: '未知错误',
+                            duration: 1500,
+                            icon: 'none',
+                            mask: true
+                        });
+                    }
+                })
+            } else { // 未读取到项目ID
+                uni.hideLoading();
+                uni.showToast({
+                    title: '未知错误',
+                    duration: 1500,
+                    icon: 'none',
+                    mask: true
+                });
+            }
+        },
+        stuatusArrProduce(statusData) {
+            const statusList = ['已提交', '二级学院审核通过', '校教务处审核通过', '专家评审通过', '已立项'];
+            switch(statusData.status) {
+                case 1: return [{
+                    status: statusList[0],
+                    time: statusData.uploadTime
+                }];
+                case 2: return [
+                    {
+                        status: statusList[0],
+                        time: statusData.uploadTime
+                    },
+                    {
+                        status: statusList[1],
+                        time: statusData.schoolPassTime
+                    }
+                ];
+                case 3: return [
+                    {
+                        status: statusList[0],
+                        time: statusData.uploadTime
+                    },
+                    {
+                        status: statusList[1],
+                        time: statusData.schoolPassTime
+                    },
+                    {
+                        status: statusList[2],
+                        time: statusData.uniPassTime
+                    }
+                ];
+                case 4: return [
+                    {
+                        status: statusList[0],
+                        time: statusData.uploadTime
+                    },
+                    {
+                        status: statusList[1],
+                        time: statusData.schoolPassTime
+                    },
+                    {
+                        status: statusList[2],
+                        time: statusData.uniPassTime
+                    },
+                    {
+                        status: statusList[3],
+                        time: statusData.judgePassTime
+                    }
+                ];
+                case 5: return [
+                    {
+                        status: statusList[0],
+                        time: statusData.uploadTime
+                    },
+                    {
+                        status: statusList[1],
+                        time: statusData.schoolPassTime
+                    },
+                    {
+                        status: statusList[2],
+                        time: statusData.uniPassTime
+                    },
+                    {
+                        status: statusList[3],
+                        time: statusData.judgePassTime
+                    },
+                    {
+                        status: statusList[4],
+                        time: statusData.finalTime
+                    }
+                ];
+                default: {
+                    uni.showToast({
+                        title: '未知错误',
+                        duration: 1500,
+                        icon: 'none',
+                        mask: true
+                    });
+                    return ;
+                }
+            }
+        },
+    }
 }
 </script>
 

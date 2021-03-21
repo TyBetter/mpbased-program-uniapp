@@ -79,17 +79,8 @@ export default {
                     return ;
                 }
                 case "progress" : { // 进度查看页面点击事件
-                    // if (this.itemId !== undefined) {
-                    //     uni.navigateTo({
-                    //         url: `./progressDetail?itemId=${this.itemId}`,
-                    //         success: () => {
-                    //             console.log("navigate successfully")
-                    //         },
-                    //         fail: error => console.log(error)
-                    //     })
-                    // } else {
-                    //     console.log("error");
-                    // }
+                    console.log(11111, this.itemId);
+                    this.$emit('child-id', this.itemId);
                     return ;
                 }
                 case "shenhe" : { // 项目审核页面点击事件
