@@ -3,12 +3,17 @@
         <h2 class="title">{{itemTitle | titleEllipsis}}</h2>
         <div class="content">
             <p class="brief">{{itemBrief | briefEllipsis}}</p>
-            <p class="time">{{itemTime}}</p>
-            
-            <!-- 仅在评审页面显示 -->
-            <p class="status" v-if="type === 'judge'">
-                {{status === "complete" ? "已评审" : "未评审"}}
+
+            <p class="footer">
+                <span class="time">{{itemTime}}</span>
+
+                <!-- 仅在评审页面显示 -->
+                <span class="status" v-if="type === 'judge'">
+                    {{status === "true" ? "已评审" : "未评审"}}
+                </span>
+
             </p>
+            
 
         </div>
     </div>
@@ -40,7 +45,7 @@ export default {
         },
         status: {
             type: String,
-            value: "notyet"
+            value: "false"
         }
 
     },
@@ -158,24 +163,31 @@ export default {
                 font-size: 30rpx;
                 letter-spacing: 1px;
                 width: 100%;
+                height: 130rpx;
                 font-weight: 250;
                 word-break: break-all;
             }
 
-            .time {
-                display: inline-block;
+            .footer {
+                margin-top: 5rpx;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 25rpx;
+                line-height: 25rpx;
+                width: 100%;
                 font-size: 25rpx;
                 letter-spacing: 1.5rpx;
-                width: 60%;
                 font-weight: 150;
-            }
 
-            .status {
-                display: inline-block;
-                font-size: 25rpx;
-                letter-spacing: 1.5rpx;
-                width: 40%;
-                font-weight: 150;
+                .time {
+                    width: 60%;
+                }
+
+                .status {
+                    color: rgba(94, 150, 255, 0.842);
+                }
+
             }
         }
     }

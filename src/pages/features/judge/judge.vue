@@ -20,14 +20,14 @@
                 <li 
                     class="items"
                     v-for="item in list"
-                    :key="item.id"
+                    :key="item.projectId"
                 >
                     <listitem
                         :itemTitle="item.title"
                         :itemBrief="item.brief"
-                        :itemTime="item.time"
-                        :status="item.status"
-                        :itemId="item.id"
+                        :itemTime="item.deadline"
+                        :status="item.judgeStatus"
+                        :itemId="item.projectId"
                         type="judge"
                     ></listitem>
                 </li>
@@ -46,59 +46,57 @@ export default {
     data() {
         return {
             isBlank: false, // 空页面显示
-            list: [
-                {
-                    title: "nihao你好",
-                    brief: "nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好",
-                    id: 1,
-                    time: "12:12:12 2/12",
-                    status: "complete"
-                },
-                {
-                    title: "nihao你好",
-                    brief: "nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好",
-                    id: 2,
-                    time: "12:12:12 2/12",
-                    status: "notyet"
-                },
-                {
-                    title: "nihao你好",
-                    brief: "nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好",
-                    id: 3,
-                    time: "12:12:12 2/12",
-                    status: "complete"
-                },
-                {
-                    title: "nihao你好",
-                    brief: "nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好",
-                    id: 4,
-                    time: "12:12:12 2/12",
-                    status: "complete"
-                },
-                {
-                    title: "nihao你好",
-                    brief: "nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好",
-                    id: 5,
-                    time: "12:12:12 2/12",
-                    status: "complete"
-                },
-                {
-                    title: "nihao你好",
-                    brief: "nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好",
-                    id: 6,
-                    time: "12:12:12 2/12",
-                    status: "complete"
-                },
-                {
-                    title: "nihao你好",
-                    brief: "nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好nihao你好",
-                    id: 7,
-                    time: "12:12:12 2/12",
-                    status: "complete"
-                }
-            ]
+            list: []
         }
     },
+    mounted() {
+        uni.showLoading();
+		const _this = this;
+        uni.getStorage({
+            key: 'user',
+            success: res => {
+                let userId = res.data.userId;
+                this.$axios({
+                    method: 'GET',
+                    url: '/judgeProjectsList',
+                    params: {
+                        userId
+                    }
+                }).then(res => {
+                    if( res.msg === 'success') {
+                        uni.hideLoading();
+                        _this.list = res.data;
+                    } else {
+                        console.warn('返回数据出错');
+                        uni.showToast({
+                            title: '未知错误',
+                            durantion: 1500,
+                            mask: true,
+                            icon: 'none'
+                        });
+                    }
+                }).catch(err => {
+                    console.warn('err', err);
+                    uni.showToast({
+                        title: '未知错误',
+                        durantion: 1500,
+                        mask: true,
+                        icon: 'none'
+                    });
+                });
+            },
+            fail: err => {
+                console.warn('读取本地内存出错', err);
+                uni.showToast({
+                    title: '未知错误',
+                    durantion: 1500,
+                    mask: true,
+                    icon: 'none'
+                });
+            }
+        })
+		
+	}
     
 }
 </script>
