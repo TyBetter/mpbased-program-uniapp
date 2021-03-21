@@ -17,7 +17,7 @@
         <!-- 无项目时显示 -->
         <blank
             text="已发布的项目"
-            v-if="projectList.length === 0"
+            v-if="newsList.length === 0"
         ></blank>
 
         <div 
@@ -25,12 +25,12 @@
             v-else
         >
             <ul class="list">
-                <li class="items" v-for="item in projectList" :key="item.id">
+                <li class="items" v-for="item in newsList" :key="item.newsId">
                     <Listitem
                         :itemTitle="item.title"
                         :itemBrief="item.brief"
                         :itemTime="item.time"
-                        :itemId="item.id"
+                        :itemId="item.newsId"
                         type="projectPublish"
                     />
                 </li>
@@ -41,11 +41,12 @@
 
 <script>
 import Listitem from "./../../../components/Listitem";
+import blank from "./../../../components/blank";
 
 
 export default {
     components: {
-        Listitem
+        Listitem, blank
     },
     methods: {
         plus() {
@@ -67,52 +68,58 @@ export default {
                 color: 'rgba(94, 150, 255, 0.842)',
                 width: "550rpx",
             },
-            projectList: [
-                {
-                    id: 1,
-                    title: "hello",
-                    brief: "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好",
-                    time: "12:12:12 12/2"
-                },
-                {
-                    id: 2,
-                    title: "hello",
-                    brief: "",
-                    time: "12:12:12 12/2"
-                },
-                {
-                    id: 3,
-                    title: "hello",
-                    brief: "nihaonihaonihaonihaonihaonihaonihaonihaonihaonihao",
-                    time: "12:12:12 12/2"
-                },
-                {
-                    id: 4,
-                    title: "hello",
-                    brief: "nihaonihaonihaonihaonihaonihaonihaonihaonihaonihao",
-                    time: "12:12:12 12/2"
-                },
-                {
-                    id: 5,
-                    title: "hello",
-                    brief: "nihaonihaonihaonihaonihaonihaonihaonihaonihaonihao",
-                    time: "12:12:12 12/2"
-                },
-                {
-                    id: 6,
-                    title: "hello",
-                    brief: "nihaonihaonihaonihaonihaonihaonihaonihaonihaonihao",
-                    time: "12:12:12 12/2"
-                },
-                {
-                    id: 7,
-                    title: "hello",
-                    brief: "nihaonihaonihaonihaonihaonihaonihaonihaonihaonihao",
-                    time: "12:12:12 12/2"
-                }
-            ]
+            newsList: []
         }
     },
+    mounted() {
+		const _this = this;
+        uni.showLoading();
+        uni.getStorage({
+            key: 'user',
+            success: res => {
+                this.$axios({
+                    method: 'GET',
+                    url: '/newsFromMe',
+                    params: {
+                        userId: res.data.userId
+                    }
+                }).then(res => {
+                    if (res.msg === 'success') {
+                        _this.newsList = res.data;
+                        uni.hideLoading();
+                    }
+                }).catch(err => {
+                    console.warn('获取后台数据出错', err)
+                    let st = setTimeout(() => {
+                        uni.navigateBack();
+                        clearTimeout(st);
+                    }, 1800)
+                    uni.showToast({
+                        title: '未知错误',
+                        duration: 1500,
+                        mask: true,
+                        icon: 'none'
+                    });
+                });
+            },
+            fail: err => {
+                console.warn('获取本地数据出错', err);
+
+                let st = setTimeout(() => {
+                    uni.navigateBack();
+                    clearTimeout(st);
+                }, 1800);
+
+                uni.showToast({
+                    title: '未知错误',
+                    duration: 1500,
+                    mask: true,
+                    icon: 'none'
+                });
+            }
+        })
+		
+	},
 }
 </script>
 
