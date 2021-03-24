@@ -40,12 +40,6 @@
 			}
 		},
 		{
-			"path": "pages/features/progress/progressDetail",
-			"style": {
-				"navigationBarTitleText": "进度详情"
-			}
-		},
-		{
 			"path": "pages/features/publish/publish",
 			"style": {
 				"navigationBarTitleText": "发布申报"
