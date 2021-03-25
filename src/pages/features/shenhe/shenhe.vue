@@ -47,7 +47,8 @@ export default {
                     url: '/reviewProjects',
                     params: {
                         userId: res.data.userId,
-                        identity: res.data.userType
+                        identity: res.data.userType,
+                        type: 'school'
                     }
                 }).then(res => {
                     if (res.msg === 'success') {
