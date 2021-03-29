@@ -13,7 +13,7 @@
                         class="items" 
                         id="publish" 
                         @click.capture="onListItemClick" 
-                        v-if="userType === 'manager' || userType === 'test'"
+                        v-if="userType !== 'teacher'"
                     >
                         <u-icon name="plus" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">发布项目</span>
@@ -24,7 +24,7 @@
                         class="items" 
                         id="shenhe" 
                         @click.capture="onListItemClick" 
-                        v-if="userType === 'manager' || userType === 'test'"
+                        v-if="userType !== 'teacher'"
                     >
                         <u-icon name="checkmark" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">项目审核</span>
@@ -215,11 +215,12 @@ export default {
                 }
             }).then(res => {
                 if (res.msg === 'success') { // 身份验证成功
-                    if (res.data.userId && res.data.username && res.data.identity) {
+                    if (res.data.userId && res.data.username && res.data.identity && res.data.userSchool) {
                         let user = {
                             userId: res.data.userId,
                             account: res.data.username,
-                            userType: res.data.identity
+                            userType: res.data.identity,
+                            schoolId: res.data.userSchool
                         }
                         this.userType = res.data.identity;
                         uni.setStorage({ // 用户信息存入本地
