@@ -1,38 +1,64 @@
 // 发布新项目的表单页面
 <template>
 	<div class="container">
-		<u-form 
-            :model="form" 
-            ref="uForm"
-        >
-			<u-form-item 
-                label="标题" 
-                prop="name"
-            >
-				<u-input 
-                    v-model="form.name" 
-                />
-			</u-form-item>
+		<div class="form">
+			<div class="formItem">
+				<div class="label">
+					项目名称
+				</div>
+				<div class="input">
+					<input 
+						type="text"
+						placeholder="请输入项目名称"
+						v-model="projectName"
+					>
+				</div>
+			</div>
 
-			<u-form-item 
-                label="简介" 
-                prop="intro"
-            >
-				<u-input 
-                    type="textarea" 
-                    v-model="form.intro" 
-                    auto-height=true
-                />
-			</u-form-item>
+			<div class="formItem">
+				<div class="label">
+					项目简介
+				</div>
+				<div class="input text-area">
+					<input 
+						type="text"
+						placeholder="请输入项目简介"
+						v-model="projectBrief"
+					>
+				</div>
+			</div>
+			
+			<div class="formItem">
+				<div class="label">
+					项目内容
+				</div>
+				<div class="input text-area">
+					<input 
+						type="text"
+						placeholder="请输入项目内容"
+						v-model="projectContent"
+					>
+				</div>
+			</div>
+
+			<div class="formItem">
+				<div class="label">
+					截止日期
+				</div>
+				<div class="input">
+					<input 
+						type="text"
+						disabled
+						placeholder="请选择项目截止日期"
+					>
+					<span class="icon">
+						<u-icon name="calendar" color="#2979ff" size="60"></u-icon>
+					</span>
+				</div>
+			</div>
 
 
-		</u-form>
-		<view>
-			<u-select v-model="show" :list="list" @confirm="confirm"></u-select>
-			<u-button @click="show = true">打开</u-button>
-		</view>
-
-		<u-button @click="submit">发布</u-button>
+		</div>
 	</div>
 </template>
 
@@ -40,41 +66,12 @@
 export default {
 	data() {
 		return {
-			form: {
-				name: '',
-				intro: '',
-				time: '',
-				fenpei: [{}]
-			},
-			rules: {
-				name: [
-					{ 
-						required: true, 
-						message: '请输入标题', 
-						// 可以单个或者同时写两个触发验证方式 
-						trigger: ['change','blur'],
-					}
-				],
-				intro: [
-					{
-						// min: 5, 
-						// message: '简介不能少于5个字', 
-						trigger: 'change'
-					}
-				]
-			},
+			projectName: '',
+			projectBrief: '',
+			projectContent: '',
+			projectDeadlin: '',
 			schoolList: ['工商管理学院','旅游与城乡规划学院','财务与会计学院','统计与数学学院','经济学院','金融学院','食品与生物工程学院','环境科学与工程学院','信息与电子工程学院','计算机与信息工程学院','管理工程与电子商务学院（跨境电商学院）','法学院（知识产权学院）','人文与传播学院','公共管理学院','外国语学院','东方语言与哲学学院','艺术设计学院','马克思主义学院','泰隆金融学院','国际商学院','章乃器学院','MBA学院','国际教育学院','继续教育学院','人民武装学院','杭州商学院'], // 学院列表
-			show: true,
-			list: [
-				{
-					value: '1',
-					label: '江'
-				},
-				{
-					value: '2',
-					label: '湖'
-				}
-			],
+
 		};
 	},
 	methods: {
@@ -93,11 +90,69 @@ export default {
 		},
 		confirm(e) {
 			console.log(e[0]);
+		},
+		change() {
+
 		}
 	},
-	// 必须要在onReady生命周期，因为onLoad生命周期组件可能尚未创建完毕
-	onReady() {
-		this.$refs.uForm.setRules(this.rules);
-	}
 };
 </script>
+
+<style lang="less" scoped>
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px;
+	flex-wrap: wrap;
+	height: 100%;
+
+	.form {
+        display: flex;
+        width: 100%;
+		align-items: center;
+		height: 100%;
+		flex-wrap: wrap;
+
+		.formItem {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 80rpx;
+			margin-bottom: 15rpx;
+			padding: 5px;
+			width: 100%;
+			border-bottom: 1px solid rgba(159, 212, 255, 0.774);
+
+			.label {
+				width: 20%;
+				height: 80rpx;
+				line-height: 80rpx;
+				margin-right: 5%;
+			}
+			
+			.input {
+				width: 75%;
+				height: 100%;
+
+				input {
+					height: 100%;
+				}
+
+				.icon {
+					float: right;
+				}
+
+			}
+
+			.input::after {
+				content: '';
+				display: block;
+				// visibility: hidden;
+				clear: both;
+			}
+		}
+    }
+}
+	
+</style>

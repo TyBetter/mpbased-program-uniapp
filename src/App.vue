@@ -16,8 +16,8 @@
 	/*每个页面公共css */
 	@import "uview-ui/index.scss";
 	* {
-    margin: 0;
-    padding: 0;
+		margin: 0;
+		padding: 0;
 	}
 
 	.container {

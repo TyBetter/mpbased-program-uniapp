@@ -44,7 +44,7 @@ export default {
             success: res => {
                 this.$axios({
                     method: 'GET',
-                    url: '/reviewProjects',
+                    url: '/reviewProjectsList',
                     params: {
                         userId: res.data.userId,
                         identity: res.data.userType,

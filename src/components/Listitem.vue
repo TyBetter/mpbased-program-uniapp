@@ -77,7 +77,7 @@ export default {
                 case "judge" : { // 项目评审页面点击事件
                     if (this.itemId !== undefined) {
                         uni.navigateTo({
-                            url: `./judgeDetail?itemId=${this.itemId}&time=${this.itemTime}`,
+                            url: `./judgeDetail?itemId=${this.itemId}&time=${this.itemTime}&status=${this.status}`,
                             success: () => {
                                 console.log("navigate successfully")
                             },
