@@ -17,6 +17,10 @@
                     {{status === "true" ? "已评审" : "未评审"}}
                 </span>
 
+                <span class="status" v-if="type === 'shenhe'">
+                    {{status === "true" ? "已审核" : "未审核"}}
+                </span>
+
             </p>
             
 
@@ -95,7 +99,7 @@ export default {
                 case "shenhe" : { // 项目审核页面点击事件
                     if (this.itemId !== undefined) {
                         uni.navigateTo({
-                            url: `./shenheDetail?itemId=${this.itemId}&time=${this.itemTime}`,
+                            url: `./shenheDetail?itemId=${this.itemId}&time=${this.itemTime}&status=${this.status}`,
                             success: () => {
                                 console.log("navigate successfully")
                             },

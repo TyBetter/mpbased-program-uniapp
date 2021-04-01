@@ -12,6 +12,7 @@
                     :itemBrief="item.brief"
                     :itemId="item.projectId"
                     :itemTime="item.time"
+                    :status="item.status"
                     type="shenhe"
                 />
             </li>
@@ -42,17 +43,21 @@ export default {
         uni.getStorage({
             key: 'user',
             success: res => {
+                let identity = res.data.userType;
                 this.$axios({
                     method: 'GET',
                     url: '/reviewProjectsList',
                     params: {
                         userId: res.data.userId,
-                        identity: res.data.userType,
-                        type: 'school'
+                        identity,
+                        type: 'uni'
                     }
                 }).then(res => {
                     if (res.msg === 'success') {
+                        let whatPass = (identity === 'test' || identity === 'uniManager') ? 'isUniPass' : 'isSchoolPass';
+                        res.data.map(item => item.status = (item[whatPass] === null || item[whatPass] === undefined) ? 'false' : 'true');
                         _this.list = res.data;
+                        console.log('1111', whatPass, _this.list);
                         uni.hideLoading();
                     }
                 }).catch(err => {
