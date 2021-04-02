@@ -226,10 +226,11 @@ export default {
     },
     methods: {
         handleSubmit() { // popup提交按钮
-            if (this.judgeSelectedList.length === 0 && this.deadline) {
+            if (this.judgeSelectedList.length !== 0 && this.deadline) {
                 this.popupShow = false;
                 this.modalShow = true;
             } else {
+                console.log(this.judgeSelectedList, this.deadline);
                 uni.showToast({
                     title: '请完整填写信息',
                     duration: 1500,
@@ -250,7 +251,6 @@ export default {
             } else {
                 this.modalShow = true;
             }
-            // this.modalShow = true;
         },
         onRefuseBtnClicked() { // 审核不通过按钮
             this.isPass = 'false';
@@ -259,7 +259,7 @@ export default {
         reviewConfirm() { // modal确认按钮
             this.projectReivew({
                 isPass: this.isPass,
-                judgeList: this.judgeSelectedList,
+                judgeList: this.judgeSelectedList.map(item => Number.parseInt(item)),
                 deadline: new Date(this.deadline).toLocaleDateString()
             });
         },
@@ -268,6 +268,7 @@ export default {
             return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
         },
         projectReivew({isPass, judgeList=[], deadline=''}) { // 根据身份生成参数，请求接口
+            console.log('projectReview');
             let params = {};
             if (this.identity === 'schoolManager') {
                 params = {
@@ -323,19 +324,20 @@ export default {
                 url: '/reviewProject',
                 data: params
             }).then(() => {
+                this.modalShow = false;
+                this.reviewStatus = 'true';
                 uni.showToast({
                     title: "审核成功",
                     duration: 1500,
                     icon: 'none'
                 });
-                this.modalShow = false;
-                this.reviewStatus = 'true';
             }).catch(() => {
                 uni.showToast({
                     title: "审核失败，请稍后再试",
                     duration: 1500,
                     icon: 'none'
                 });
+                this.modalShow = false;
             }); 
         },
         getJudges() { // 获取评审专家名单
@@ -413,8 +415,8 @@ export default {
             this.deadline = e.result;
         },
         onJudgeSelectedChange(e) {
-            console.log(e.detail); // array
-            this.judgeSelectedList = e.detail;
+            console.log(e.detail.value); // array
+            this.judgeSelectedList = e.detail.value.map(item => Number.parseInt(item));
         }
     },
 }
