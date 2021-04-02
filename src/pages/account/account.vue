@@ -52,6 +52,16 @@
                         <span class="letter">进度查看</span>
                         <span class="rightArrow">></span>
                     </li>
+
+                    <li 
+                        class="items" 
+                        id="updatePwd" 
+                        @click.capture="updatePwd" 
+                    >
+                        <u-icon name="edit-pen" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
+                        <span class="letter">修改密码</span>
+                        <span class="rightArrow">></span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -101,6 +111,42 @@
                 </u-button>
             </div>
         </u-popup>
+
+        <u-popup 
+            v-model="pwdPopup" 
+            mode="center" 
+            border-radius="14"
+            :custom-style="popupCustomStyle"
+            height="600"
+            zoom="false"
+            @close="onPwdPopupClose"
+        >
+            <div class="form">
+                <div class="formBlock">
+                    <!-- <span class="title">请输入现在的密码</span> -->
+                    <input type="text" v-model.lazy="pwdNow" placeholder="请输入现在的密码">
+                </div>
+
+                <div class="formBlock">
+                    <!-- <span class="title">请输入新密码</span> -->
+                    <input type="text" v-model.lazy="pwdNew1" placeholder="请输入新密码">
+                </div>
+
+                <div class="formBlock">
+                    <!-- <span class="title">请再次输入新密码</span> -->
+                    <input type="text" v-model.lazy="pwdNew2" placeholder="请再次输入新密码">
+                </div>
+
+                <u-button 
+                    type="primary" 
+                    @click="pwdSubmit" 
+                    plain 
+                    :custom-style="loginBtnCustomStyle"
+                >
+                    提交
+                </u-button>
+            </div>
+        </u-popup>
         
 
     </div>
@@ -131,6 +177,11 @@ export default {
             login: false, // 是否显示登录表单弹窗
             userId: null, // 登录表单输入账号
             pwd: null, // 登录表单输入密码
+            pwdPopup: false,
+            pwdNow: '',
+            pwdNew1: '',
+            pwdNew2: '',
+            userId: null
         }
     },
     methods: {
@@ -249,7 +300,95 @@ export default {
             }).catch(err => {
                 console.warn('login err', err);
             })
-		}
+		},
+        updatePwd() {
+            this.pwdPopup = true;
+        },
+        pwdSubmit() {
+            if (!this.pwdNow || !this.pwdNew1 || !this.pwdNew2) {
+                uni.showToast({
+                    title: '请完整填写表单',
+                    duration: 1500,
+                    mask: true,
+                    icon: 'none'
+                });
+                return ;
+            } else {
+                const [oldPwd, newPwd, newPwd2] = [this.pwdNow, this.pwdNew1, this.pwdNew2];
+                if (newPwd !== newPwd2) {
+                    uni.showToast({
+                        title: '两次输入不匹配',
+                        duration: 1500,
+                        mask: true,
+                        icon: 'none'
+                    });
+                    return ;
+                } else {
+                    this.$axios({
+                        method: 'POST',
+                        url: '/updatePwd',
+                        data: {
+                            userId: this.userId, 
+                            oldPwd, 
+                            newPwd
+                        }
+                    }).then(res => {
+                        console.log(res.code);
+                        if (res.code === 200 || res.code === 401) {
+                            if (res.msg === 'success') {
+                                uni.showToast({
+                                    title: '密码修改成功',
+                                    duration: 1500,
+                                    mask: true,
+                                    icon: 'none'
+                                });
+                                this.pwdPopup = false;
+                                this.pwdNow = '';
+                                this.pwdNew1 = '';
+                                this.pwdNew2 = '';
+                            } else {
+                                if (res.msg) {
+                                    console.warn(res.msg);
+                                    uni.showToast({
+                                        title: res.msg,
+                                        duration: 1500,
+                                        mask: true,
+                                        icon: 'none'
+                                    });
+                                } else {
+                                    uni.showToast({
+                                        title: '修改失败，请稍后再试',
+                                        duration: 1500,
+                                        mask: true,
+                                        icon: 'none'
+                                    });
+                                }
+                            }
+                        } else {
+                            uni.showToast({
+                                title: '服务出错，请稍后再试',
+                                duration: 1500,
+                                mask: true,
+                                icon: 'none'
+                            });
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                        uni.showToast({
+                            title: '服务出错，请稍后再试',
+                            duration: 1500,
+                            mask: true,
+                            icon: 'none'
+                        });
+                    })
+                }
+            }
+        },
+        onPwdPopupClose() {
+            this.pwdNow = '';
+            this.pwdNew1 = '';
+            this.pwdNew2 = '';
+        }
     },
     onLoad() {
         uni.showLoading({
@@ -262,6 +401,7 @@ export default {
                     this.islogged = true;
                     this.username = res.data.account;
                     this.usertype = res.data.userType;
+                    this.userId = res.data.userId;
                     uni.hideLoading();
                 } else {
                     uni.hideLoading();
