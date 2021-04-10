@@ -436,7 +436,7 @@ export default {
                 if (res.data) {
                     this.islogged = true;
                     this.username = res.data.account;
-                    this.usertype = res.data.userType;
+                    this.userType = res.data.userType;
                     this.userId = res.data.userId;
                     uni.hideLoading();
                     console.log(this.userType, 1);
