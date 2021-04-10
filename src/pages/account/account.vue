@@ -103,7 +103,7 @@
             <div class="form">
                 <div class="formBlock">
                     <span class="title">账号</span>
-                    <input type="text" v-model.lazy="userId" placeholder="请输入账号">
+                    <input type="text" v-model.lazy="userIdInput" placeholder="请输入账号">
                 </div>
 
                 <div class="formBlock">
@@ -186,7 +186,7 @@ export default {
             islogged: false, // 是否已登录
             userType: "", // 用户身份
             login: false, // 是否显示登录表单弹窗
-            userId: null, // 登录表单输入账号
+            userIdInput: null, // 登录表单输入账号
             pwd: null, // 登录表单输入密码
             pwdPopup: false,
             pwdNow: '',
@@ -258,7 +258,7 @@ export default {
             uni.showLoading({
                 title: "请稍候"
             });
-			if (!this.userId || !this.pwd) { // 账号或密码未填写
+			if (!this.userIdInput || !this.pwd) { // 账号或密码未填写
                 uni.hideLoading();
                 uni.showToast({
                     title: "请完整输入账号和密码",
@@ -272,7 +272,7 @@ export default {
                 method: 'GET',
                 url: '/login',
                 params: {
-                    userId: this.userId,
+                    userId: this.userIdInput,
                     pwd: this.pwd
                 }
             }).then(res => {
@@ -406,6 +406,11 @@ export default {
                 key: 'user',
                 success: () => {
                     this.islogged = false;
+                    this.userId = null;
+                    this.username = null;
+                    this.userType = null;
+                    this.pwd = null;
+                    this.userIdInput = null;
                 },
                 fail: () => {
                     uni.showToast({
@@ -434,12 +439,18 @@ export default {
                     this.usertype = res.data.userType;
                     this.userId = res.data.userId;
                     uni.hideLoading();
+                    console.log(this.userType, 1);
+
                 } else {
                     uni.hideLoading();
                 }
             }
         });
-    }
+        console.log(this.userType, 2);
+    },
+    beforeMount() {
+        console.log(this.userType, 3);
+    },
 }
 </script>
 
