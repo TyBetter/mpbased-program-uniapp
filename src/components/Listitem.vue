@@ -142,9 +142,10 @@ export default {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        background-color: rgba(192, 192, 192, 0.205);
+        // background-color: rgba(146, 202, 255, 0.342);
+        background-color: #fff;
         box-sizing: border-box;
-        border-radius: 5rpx;
+        border-radius: 10rpx;
         flex-direction: column;
         justify-content: flex-start;
 
@@ -154,7 +155,8 @@ export default {
             height: 80rpx;
             line-height: 80rpx;
             padding-bottom: 3rpx;
-            border-bottom: 0.5px solid rgba(129, 129, 129, 0.822);
+            border-bottom: 0.5px solid rgba(167, 167, 167, 0.418);
+            color: rgba(94, 150, 255, 0.842);
         }
 
         .content {
@@ -190,6 +192,7 @@ export default {
 
                 .time {
                     width: 60%;
+                    color: #b9b9b9;
                 }
 
                 .status {

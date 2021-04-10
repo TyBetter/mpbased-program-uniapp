@@ -1,7 +1,7 @@
 // 新建项目按钮&已发布项目列表
 <template>
     <div class="container">
-        <div class="btnHead">
+        <!-- <div class="btnHead">
             <u-button 
                 type="primary" 
                 @click="plus" 
@@ -11,7 +11,9 @@
                 <u-icon name="plus"></u-icon>
                 发布新项目
             </u-button>
-        </div>
+        </div> -->
+
+        <list-title titleText="已发布公告"/>
 
 
         <!-- 无项目时显示 -->
@@ -42,11 +44,11 @@
 <script>
 import Listitem from "./../../../components/Listitem";
 import blank from "./../../../components/blank";
-
+import ListTitle from '../../../components/listTitle.vue'
 
 export default {
     components: {
-        Listitem, blank
+        Listitem, blank, ListTitle
     },
     methods: {
         plus() {
@@ -125,7 +127,7 @@ export default {
 
 <style lang="less" scoped>
     .container {
-        
+        background-color: #f3f3f3;
 
         .btnHead {
             margin-top: 60rpx;

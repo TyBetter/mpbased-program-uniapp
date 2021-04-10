@@ -51,6 +51,10 @@
 </script>
 
 <style scoped>
+	.container {
+		background-color: #f3f3f3;
+	}
+	
 	.banner {
 		height: 200rpx;
 		width: 100%;

@@ -16,7 +16,7 @@
                         v-if="userType !== 'teacher'"
                     >
                         <u-icon name="plus" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
-                        <span class="letter">发布项目</span>
+                        <span class="letter">发布公告</span>
                         <span class="rightArrow">></span>
                     </li>
 
@@ -60,6 +60,16 @@
                     >
                         <u-icon name="edit-pen" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
                         <span class="letter">修改密码</span>
+                        <span class="rightArrow">></span>
+                    </li>
+
+                    <li 
+                        class="items" 
+                        id="logout" 
+                        @click.capture="logout" 
+                    >
+                        <u-icon name="close" color="rgba(94, 150, 255, 0.842)" size=50></u-icon>
+                        <span class="letter">退出登录</span>
                         <span class="rightArrow">></span>
                     </li>
                 </ul>
@@ -112,6 +122,7 @@
             </div>
         </u-popup>
 
+        <!-- 修改密码表单 -->
         <u-popup 
             v-model="pwdPopup" 
             mode="center" 
@@ -388,6 +399,26 @@ export default {
             this.pwdNow = '';
             this.pwdNew1 = '';
             this.pwdNew2 = '';
+        },
+        logout() {
+            uni.showLoading();
+            uni.removeStorage({
+                key: 'user',
+                success: () => {
+                    this.islogged = false;
+                },
+                fail: () => {
+                    uni.showToast({
+                        title: '退出失败',
+                        duration: 1500,
+                        mask: true,
+                        icon: 'none'
+                    });
+                },
+                complete: () => {
+                    uni.hideLoading();
+                }
+            });
         }
     },
     onLoad() {
@@ -458,7 +489,7 @@ export default {
                         line-height: 100rpx;
                         letter-spacing: 1px;
                         font-size: 35rpx;
-                        border-bottom: 0.5px solid rgba(129, 129, 129, 0.822);
+                        border-bottom: 0.5px solid rgba(167, 167, 167, 0.418);
 
                         .letter {
                             margin-left: 10rpx;
@@ -473,7 +504,7 @@ export default {
                     }
 
                     .items:last-child {
-                        border: none;
+                        border-bottom: none;
                     }
                 }
             }

@@ -79,7 +79,7 @@ export default {
             progressList: []
         }
     },
-    onLoad() {
+    mounted() {
         uni.showLoading();
         const _this = this;
         uni.getStorage({
@@ -248,6 +248,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    .container {
+        background-color: #f3f3f3;
+    }
+
     .u-order-title {
 		color: #333333;
 		font-weight: bold;
