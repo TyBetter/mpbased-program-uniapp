@@ -450,12 +450,17 @@ export default {
         }
 
         .buttons {
-            margin-top: 100rpx;
-            width: 100%;
-            display: flex;
-            justify-content: space-evenly;
+            height: 3.5rem;
+            padding: 5px 1rem;
             align-items: center;
-
+            background-color: rgba(119, 189, 255, 0.342);
+            border-radius: 2rem;
+            position: fixed;
+            bottom: 60px;
+            left: 5%;
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
             .status {
                 color: rgba(94, 150, 255, 0.842);
             }

@@ -2,7 +2,7 @@
     <div class="container">
 
         <listTitle
-            titleText="待评审"
+            titleText="待评审项目"
         ></listTitle>
 
 
