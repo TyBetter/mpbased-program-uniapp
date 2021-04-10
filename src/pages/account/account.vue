@@ -184,7 +184,7 @@ export default {
                 overflow: "hidden"
             },
             islogged: false, // 是否已登录
-            userType: "test", // 用户身份
+            userType: "", // 用户身份
             login: false, // 是否显示登录表单弹窗
             userId: null, // 登录表单输入账号
             pwd: null, // 登录表单输入密码
@@ -438,7 +438,7 @@ export default {
                     uni.hideLoading();
                 }
             }
-        })
+        });
     }
 }
 </script>

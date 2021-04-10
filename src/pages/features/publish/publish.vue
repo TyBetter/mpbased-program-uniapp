@@ -128,6 +128,7 @@ export default {
 <style lang="less" scoped>
     .container {
         background-color: #f3f3f3;
+        min-height: 100vh;
 
         .btnHead {
             margin-top: 60rpx;
