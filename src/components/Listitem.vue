@@ -79,18 +79,33 @@ export default {
                     return ;
                 }
                 case "judge" : { // 项目评审页面点击事件
-                    if (this.itemId !== undefined) {
-                        uni.navigateTo({
-                            url: `./judgeDetail?itemId=${this.itemId}&time=${this.itemTime}&status=${this.status}`,
-                            success: () => {
-                                console.log("navigate successfully")
-                            },
-                            fail: error => console.log(error)
-                        })
+                    let date = new Date();
+                    let today = `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`
+                    today = Date.parse(today); // 转换为标准格式后解析
+                    let ddl = Date.parse(this.itemTime.replace(/\-/g,'/'));
+
+                    if (today > ddl) { // 判断是否超过截止日期且未评审
+                        uni.showToast({
+                            title: '项目已过期，无法评审',
+                            icon: 'none',
+                            mask: true,
+                            duration: 1500
+                        });
+                        return ;
                     } else {
-                        console.log("error");
+                        if (this.itemId !== undefined) {
+                            uni.navigateTo({
+                                url: `./judgeDetail?itemId=${this.itemId}&time=${this.itemTime}&status=${this.status}`,
+                                success: () => {
+                                    console.log("navigate successfully")
+                                },
+                                fail: error => console.log(error)
+                            })
+                        } else {
+                            console.log("error");
+                        }
+                        return ;
                     }
-                    return ;
                 }
                 case "progress" : { // 进度查看页面点击事件
                     this.$emit('child-id', this.itemId);
