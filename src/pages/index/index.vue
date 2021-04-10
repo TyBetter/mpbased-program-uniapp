@@ -28,24 +28,40 @@
 		},
 		data() {
 			return {
-				itemList:[]
+				itemList:[],
+				schoolId: ''
 			}
 		},
 		onLoad() {
-			
+			uni.getStorage({ // 读取本地数据判断是否已登录
+				key: "user",
+				complete: res => {
+					if (res.data) {
+						this.islogged = true;
+						this.schoolId = res.data.schoolId;
+					}
+				}
+			});
 		},
 		mounted() {
-			const _this = this;
-			this.$axios({
-				method: 'GET',
-				url: '/newsIndex',
-				params: {}
-			}).then(res => {
-				_this.itemList = res;
-			}).catch(err => console.warn('err', err))
+			this.getNewsList();
 		},
 		methods: {
-			
+			getNewsList() { // 若已登录则获取本学院news，否则获取校级news
+				uni.showLoading();
+				const _this = this;
+				this.$axios({
+					method: 'GET',
+					url: '/newsIndex',
+					params: {}
+				}).then(res => {
+					_this.itemList = res;
+					uni.hideLoading();
+				}).catch(err => {
+					console.warn('err', err);
+					uni.hideLoading();
+				})
+			}
 		}
 	}
 </script>
