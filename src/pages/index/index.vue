@@ -44,16 +44,22 @@
 			});
 		},
 		mounted() {
-			this.getNewsList();
+			if (this.islogged) {
+				this.getNewsList(this.schoolId);
+			} else {
+				this.getNewsList('0');
+			}
 		},
 		methods: {
-			getNewsList() { // 若已登录则获取本学院news，否则获取校级news
+			getNewsList(userSchool) { // 若已登录则获取本学院news，否则获取校级news
 				uni.showLoading();
 				const _this = this;
 				this.$axios({
 					method: 'GET',
 					url: '/newsIndex',
-					params: {}
+					params: {
+						userSchool
+					}
 				}).then(res => {
 					_this.itemList = res;
 					uni.hideLoading();
@@ -69,6 +75,7 @@
 <style scoped>
 	.container {
 		background-color: #f3f3f3;
+		min-height: 100vh;
 	}
 	
 	.banner {
