@@ -32,7 +32,7 @@
 				schoolId: ''
 			}
 		},
-		onLoad() {
+		onShow () {
 			uni.getStorage({ // 读取本地数据判断是否已登录
 				key: "user",
 				complete: res => {
@@ -44,6 +44,13 @@
 			});
 		},
 		mounted() {
+			if (this.islogged) {
+				this.getNewsList(this.schoolId);
+			} else {
+				this.getNewsList('0');
+			}
+		},
+		onPullDownRefresh() {
 			if (this.islogged) {
 				this.getNewsList(this.schoolId);
 			} else {

@@ -49,7 +49,7 @@ export default {
             list: []
         }
     },
-    mounted() {
+    onShow() {
         uni.showLoading();
 		const _this = this;
         uni.getStorage({
@@ -93,7 +93,8 @@ export default {
                     mask: true,
                     icon: 'none'
                 });
-            }
+            },
+            complete: () => uni.hideLoading()
         })
 		
 	}

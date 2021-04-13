@@ -37,7 +37,7 @@ export default {
             list: []
         }
     },
-    mounted() {
+    onShow() {
 		const _this = this;
         uni.showLoading();
         uni.getStorage({
